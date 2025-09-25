@@ -30,6 +30,11 @@ ul {
     list-style: square;
     padding-left: 1.25rem;
 }
+li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
 nav {
     background: #24292f;
     padding: 1rem 0;
