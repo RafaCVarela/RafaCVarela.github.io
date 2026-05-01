@@ -1,40 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Portfólio de Rafael Varela, estudante de Engenharia de Computação com foco em Back-End, Automação e IA.">
-    <title>Rafael Varela - Portfólio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Rafael Costa Varela | Software Developer • Engineering Student</title>
+  <meta name="description" content="Portfólio de Rafael Costa Varela: Software Developer e estudante de Engenharia. Projetos em Arduino/IoT e Web, com foco em performance e boas práticas." />
+
+  <link rel="canonical" href="https://rafacvarela.github.io/" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:title" content="Rafael Costa Varela | Portfólio" />
+  <meta property="og:description" content="Projetos em Arduino/IoT e Web. Software Developer • Engineering Student." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    
-    <div id="header-container"></div>
+  <div id="header-container"></div>
 
-    <main>
-        <section>
-            <h2>Bem-vindo ao meu Portfólio!</h2>
-            <p>Olá! Sou Rafael Varela, um estudante de Engenharia de Computação apaixonado por resolver problemas através da tecnologia. Meu foco principal é o desenvolvimento Back-End, Automação e a aplicação de Inteligência Artificial para criar soluções eficientes e inovadoras. Explore meus projetos e sinta-se à vontade para entrar em contato!</p>
-        </section>
+  <main class="container stack-lg">
+    <section class="section">
+      <header class="section-header">
+        <h1>Software Developer • Engineering Student</h1>
+        <p>Projetos em <strong>Arduino/IoT</strong> e <strong>Web</strong>, com foco em performance, organização e boas práticas.</p>
+      </header>
 
-        <section>
-            <h2>Projetos em Destaque</h2>
-            <p>Aqui estão alguns dos meus principais projetos. Para ver a lista completa, acesse a página de projetos.</p>
-            <ul>
-                <li>
-                    <a href="https://github.com/RafaCVarela/garra-hidraulica-automatizada/tree/main">Garra Hidráulica Automatizada</a> 
-                    - Projeto de automação para controle de uma garra hidráulica.
-                </li>
-                <li>
-                    <a href="https://github.com/RafaCVarela/laravel-em-30-dias">Laravel em 30 dias</a> 
-                    - Série de estudos práticos sobre o framework Laravel.
-                </li>
-            </ul>
-        </section>
-    </main>
-    
-    <div id="footer-container"></div>
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Em destaque</h2>
+          <p class="card-desc">Confira meus projetos e leia o blog com notas curtas sobre desenvolvimento, UI e SEO.</p>
 
-    <script src="js/main.js"></script>
+          <div class="card-meta">
+            <a class="btn btn-primary" href="/projects/projects.html">Ver Projetos</a>
+            <a class="btn" href="/blog.html">Ir para o Blog</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="section">
+      <header class="section-header">
+        <h2>Recentes no Blog</h2>
+        <p>Os 3 primeiros itens do array são exibidos automaticamente aqui.</p>
+      </header>
+
+      <div id="home-posts" class="grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>
