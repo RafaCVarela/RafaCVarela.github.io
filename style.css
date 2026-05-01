@@ -1,133 +1,299 @@
-/* style.css */
+/* ==========================================================================
+   style.css — Portfólio (HTML/CSS/JS puro) — minimalista + cards + SEO UI
+   Base visual inspirada na paleta do default_shadcn_theme.css (Portifoliominimalista)
+   ========================================================================== */
 
-/* --- GERAL --- */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f6f8fa;
-    color: #333;
-    line-height: 1.6;
+/* ---------- Tokens (cores/raios/sombra) ---------- */
+:root{
+  --bg: #ffffff;
+  --fg: #0b0f17;              /* próximo do --primary/#030213 */
+  --muted-fg: #5b6270;
+  --surface: #ffffff;
+  --surface-2: #f6f7f9;        /* similar ao secondary */
+  --border: rgba(0, 0, 0, 0.10);
+  --shadow: 0 10px 30px rgba(0,0,0,.07);
+
+  --primary: #030213;
+  --primary-contrast: #ffffff;
+
+  --link: #0b5fff;
+  --link-hover: #0847c4;
+
+  --radius: 12px;
+
+  --container: 1100px;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-main {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+/* Dark mode opcional (se quiser ativar via class="dark" no <html>) */
+html.dark{
+  --bg: #0b0f17;
+  --fg: #f5f6f8;
+  --muted-fg: #b4bac6;
+  --surface: #0f1520;
+  --surface-2: #121a28;
+  --border: rgba(255,255,255,0.12);
+  --shadow: 0 14px 40px rgba(0,0,0,.35);
+
+  --link: #7bb0ff;
+  --link-hover: #a7c7ff;
 }
 
-section {
-    margin: 2rem auto;
-    max-width: 700px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+/* ---------- Reset mínimo ---------- */
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-    color: #0366d6;
-    text-decoration: none;
-    font-weight: bold;
+img{ max-width: 100%; height: auto; display: block; }
+a{ color: var(--link); text-decoration: none; }
+a:hover{ color: var(--link-hover); text-decoration: underline; }
+:focus-visible{ outline: 3px solid color-mix(in srgb, var(--link) 45%, transparent); outline-offset: 3px; }
+
+/* ---------- Layout helpers ---------- */
+.container{
+  width: min(var(--container), calc(100% - 2rem));
+  margin: 0 auto;
+}
+.stack{ display: grid; gap: 1rem; }
+.stack-lg{ display: grid; gap: 1.5rem; }
+.muted{ color: var(--muted-fg); }
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
 
-a:hover {
-    text-decoration: underline;
+/* ---------- Header / Topbar ---------- */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
 }
 
-/* --- CABEÇALHO E NAVEGAÇÃO PRINCIPAL --- */
-#header-container {
-    background: #24292f;
-    color: #fff;
-    padding: 1.5rem;
-    text-align: center;
-    border-radius: 8px;
-    margin: 1rem;
+.header-inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 0;
 }
 
-header h1 {
-    margin: 0 0 0.5rem 0;
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  min-width: 220px;
+}
+.brand img{
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.brand .brand-text{
+  display: grid;
+  line-height: 1.1;
+}
+.brand .brand-name{
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.brand .brand-role{
+  font-size: .9rem;
+  color: var(--muted-fg);
 }
 
-header p {
-    margin: 0;
-    color: #c9d1d9;
+/* ---------- Nav ---------- */
+.nav{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-/* REGRA ATUALIZADA: Agora só afeta a navegação DENTRO do cabeçalho */
-#header-container nav a {
-    color: #fff;
-    margin: 0 1rem;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s ease-in-out;
+.nav a{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .45rem .7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav a:hover{
+  background: var(--surface-2);
+  border-color: var(--border);
+  text-decoration: none;
+}
+.nav a[aria-current="page"]{
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-contrast);
 }
 
-#header-container nav a:hover {
-    color: #58a6ff;
-    text-decoration: none;
+/* ---------- Main / Sections ---------- */
+main{ padding: 2rem 0 3rem; }
+.section{
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.section-header{
+  display: grid;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+.section-header h1,
+.section-header h2{
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.section-header p{ margin: 0; color: var(--muted-fg); }
+
+/* ---------- Cards (padrão) ---------- */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+.col-12{ grid-column: span 12; }
+@media (min-width: 720px){
+  .col-6{ grid-column: span 6; }
+  .col-4{ grid-column: span 4; }
 }
 
-/* --- NAVEGAÇÃO INTERNA DA PÁGINA (page-nav) --- */
-/* NOVA REGRA: Estilos para a navegação da página de projetos */
-nav.page-nav {
-    text-align: center;
-    background: #f6f8fa; /* Fundo sutil para destacar */
-    padding: 1rem;
-    border-radius: 6px;
-    margin: 1.5rem 0 2rem 0;
-    border: 1px solid #d0d7de;
+.card{
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--surface);
+  overflow: hidden;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.10);
+  border-color: color-mix(in srgb, var(--fg) 18%, var(--border));
+}
+.card-body{
+  padding: 1rem;
+  display: grid;
+  gap: .6rem;
+}
+.card-title{
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+.card-desc{
+  margin: 0;
+  color: var(--muted-fg);
+  font-size: .95rem;
+}
+.card-meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
 }
 
-nav.page-nav a {
-    color: #0366d6; /* Cor azul padrão dos links */
-    font-weight: bold;
-    margin: 0 0.75rem;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 4px;
-    transition: all 0.2s ease-in-out;
+/* ---------- Chips / Tags ---------- */
+.chip{
+  display: inline-flex;
+  align-items: center;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--fg);
+  font-size: .85rem;
+  font-weight: 600;
 }
 
-nav.page-nav a:hover {
-    color: #0969da;
-    text-decoration: none;
-    border-bottom-color: #0969da; /* Efeito de sublinhado no hover */
+/* ---------- Buttons (links com cara de botão) ---------- */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .55rem .8rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--fg);
+  font-weight: 700;
+  text-decoration: none;
+}
+.btn:hover{ text-decoration: none; border-color: color-mix(in srgb, var(--fg) 18%, var(--border)); }
+.btn-primary{
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-contrast);
+}
+.btn-primary:hover{
+  background: color-mix(in srgb, var(--primary) 92%, #000);
 }
 
-
-/* --- LISTAS, TEXTO E ARTIGOS --- */
-ul {
-    list-style: square;
-    padding-left: 1.25rem;
+/* ---------- Filters (Projetos) ---------- */
+.filters{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+}
+.filter-btn{
+  cursor: pointer;
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--fg);
+  border-radius: 999px;
+  padding: .45rem .7rem;
+  font-weight: 700;
+}
+.filter-btn[aria-pressed="true"]{
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-contrast);
 }
 
-li {
-    margin-bottom: 0.75rem;
+/* ---------- Footer ---------- */
+footer{
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  color: var(--muted-fg);
 }
+.footer-inner{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-links{
+  display: inline-flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+.footer-links a{ font-weight: 700; }
 
-article {
-    border-top: 1px solid #d8dee4;
-    padding-top: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-article:first-of-type {
-    border-top: none; /* Remove a borda do primeiro item */
-}
-
-/* --- RODAPÉ --- */
-footer {
-    text-align: center;
-    padding: 2rem;
-    margin-top: 2rem;
-    color: #555;
-    font-size: 0.9rem;
-}
-
-footer a {
-    font-weight: normal;
-}
-
-footer p {
-    margin: 0.5rem 0;
-}
+/* ---------- Pequenas melhorias tipográficas ---------- */
+h1,h2,h3{ letter-spacing: -0.02em; }
+code, pre{ font-family: var(--font-mono); }
