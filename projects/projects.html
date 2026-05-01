@@ -1,96 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <base href="../">
-    
-    <meta name="description" content="Explore os projetos de Rafael Varela em C, Python, Machine Learning, Automação, e mais.">
-    <title>Projetos - Rafael Varela Portfólio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <base href="../">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Projetos | Rafael Costa Varela</title>
+  <meta name="description" content="Projetos de Rafael Costa Varela nas categorias Arduino/IoT e Websites, com filtros rápidos e layout em cards." />
+
+  <link rel="canonical" href="https://rafacvarela.github.io/projects/projects.html" />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <div id="header-container"></div>
 
-    <div id="header-container"></div>
+  <main class="container stack-lg">
+    <section class="section">
+      <header class="section-header">
+        <h1>Projetos</h1>
+        <p>Filtre por categoria e acesse os repositórios/demos.</p>
+      </header>
 
-    <main>
-        <section>
-            <h2>Meus Projetos</h2>
-            <p>Abaixo você pode navegar pelos meus projetos, organizados por tecnologia. Esta seção está sempre sendo atualizada com novos estudos e desenvolvimentos.</p>
-            
-            <nav class="page-nav">
-                <a href="projects/projects.html#c">C</a>
-                <a href="projects/projects.html#python">Python</a>
-                <a href="projects/projects.html#php">Php</a>
-                <a href="projects/projects.html#ml">Machine Learning</a>
-                <a href="projects/projects.html#automation">Automação</a>
-                <a href="projects/projects.html#arduino">Arduino</a>
-                <a href="projects/projects.html#iot">IoT</a>
-            </nav>
-        </section>
+      <div class="filters" role="toolbar" aria-label="Filtros de projetos">
+        <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">Todos</button>
+        <button class="filter-btn" type="button" data-filter="arduino" aria-pressed="false">Arduino</button>
+        <button class="filter-btn" type="button" data-filter="websites" aria-pressed="false">Websites</button>
+      </div>
+    </section>
 
-        <section>
-            <article id="c">
-                <h3>Projetos em C</h3>
-                <ul>
-                    <li><a href="#">Projeto 1 em C</a> - Breve descrição do que o projeto faz.</li>
-                    <li><a href="#">Projeto 2 em C</a> - Breve descrição do que o projeto faz.</li>
-                </ul>
-            </article>
+    <section class="section">
+      <div class="grid" data-projects aria-live="polite"></div>
+    </section>
+  </main>
 
-            <article id="python">
-                <h3>Projetos em Python</h3>
-                <ul>
-                    <li><a href="#">Projeto 1 em Python</a> - Breve descrição do que o projeto faz.</li>
-                    <li><a href="#">Projeto 2 em Python</a> - Breve descrição do que o projeto faz.</li>
-                </ul>
-            </article>
+  <div id="footer-container"></div>
 
-            <article id="php">
-                <h3>Projetos em Php</h3>
-                <ul>
-                    <li><a href="/projects/php/project1.html">Projeto 1 em Php</a> - Programa em CLI que rastrei a atividade de um usuário no GitHub.</li>
-                    <li><a href="#">Projeto 2 em Php</a> - Breve descrição do que o projeto faz.</li>
-                </ul>
-            </article>
+  <script src="js/main.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/projects-filter.js"></script>
 
-            <article id="ml">
-                <h3>Projetos em Machine Learning</h3>
-                <ul>
-                    <li><a href="#">Projeto 1 em ML</a> - Breve descrição do que o projeto faz.</li>
-                    <li><a href="#">Projeto 2 em ML</a> - Breve descrição do que o projeto faz.</li>
-                </ul>
-            </article>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.querySelector("[data-projects]");
+      const projects = (window.PORTFOLIO && window.PORTFOLIO.projects) ? window.PORTFOLIO.projects : [];
 
-            <article id="automation">
-                <h3>Projetos em Automação</h3>
-                <ul>
-                    <li><a href="#">Projeto 1 em Automação</a> - Breve descrição do que o projeto faz.</li>
-                    <li><a href="#">Projeto 2 em Automação</a> - Breve descrição do que o projeto faz.</li>
-                </ul>
-            </article>
-
-            <article id="arduino">
-                <h3>Projetos em Arduino</h3>
-                <ul>
-                    <li><a href="/projects/arduino/project2.html">Estudo: Estudo: LED pisca pisca</a> - Primeiro contato com arduino.</li>
-                    <li><a href="/projects/arduino/project1.html">Garra Hidráulica Automatizada</a> - Controle de posicionamento e força com sensores.</li>
-                    <li><a href="#">Estação Meteorológica</a> - Coleta de dados de temperatura e umidade com display LCD.</li>
-                </ul>
-            </article>
-
-            <article id="iot">
-                <h3>Projetos em IoT</h3>
-                <ul>
-                    <li><a href="#">Monitoramento de Ambiente com ESP32</a> - Envio de dados de sensores para uma plataforma em nuvem.</li>
-                    <li><a href="#">Controle de Iluminação via Wi-Fi</a> - Lâmpadas controladas por uma interface web.</li>
-                </ul>
-            </article>
-        </section>
-    </main>
-    
-    <div id="footer-container"></div>
-
-    <script src="js/main.js"></script>
-
+      grid.innerHTML = projects.map((p) => `
+        <article class="card col-12 col-6" data-category="${p.category}">
+          <img src="${p.thumb}" alt="${p.thumbAlt}" loading="lazy" decoding="async">
+          <div class="card-body">
+            <h2 class="card-title">${p.title}</h2>
+            <p class="card-desc">${p.desc}</p>
+            <div class="card-meta">
+              <span class="chip">${p.category === "arduino" ? "Arduino/IoT" : "Websites"}</span>
+              <a class="btn btn-primary" href="${p.link}" ${p.link.startsWith("http") ? 'target="_blank" rel="noopener noreferrer"' : ""}>
+                Ver projeto
+              </a>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    });
+  </script>
 </body>
 </html>
